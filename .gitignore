@@ -8,19 +8,12 @@
 
 # User-specific files
 .gitignore
-<<<<<<< HEAD
 .Ruserdata
 .Rbuildignore
 .Rproj.user
 .Ruserdata
 .github/*
 surrosurvo.Rproj
-=======
-.Rbuildignore
-.Ruserdata
-surrosurvo.Rproj
-.github/*
->>>>>>> 2d4dc004c3ce0263effb2d60067aaa730e94397a
 src/*.o
 src/*.so
 src/*.dll
