@@ -1,0 +1,15 @@
+Package: surrosurvo
+Type: Package
+Title: Evaluation of Individual-Level Surrogacy for Survival and Ordinal Endpoints
+Version: 1.0.1
+Date: 2024-12-20
+Authors@R: c(
+    person("Kengo", "Nagashima", email = "nshi1201@gmail.com",
+           role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4529-9045")),
+    person("Jun", "Okui", role = c("aut")))
+Description: For simulation.
+License: GPL (>= 2)
+Imports: stats, survival, Rcpp (>= 1.0.13), copula
+LinkingTo: Rcpp
+Encoding: UTF-8
+RoxygenNote: 7.3.2
