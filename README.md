@@ -14,10 +14,10 @@ An implementation of Kendall's rank correlation coefficient for survival and ord
 ## Installation
 
 ``` r
-# From CRAN:
-install.packages("surrosurvo")
-
-# Or the the development version from GitHub:
+# The development version from GitHub:
 # install.packages("devtools")
 devtools::install_github("nshi-stat/surrosurvo")
+
+# From CRAN (will be released):
+# install.packages("surrosurvo")
 ```
