@@ -7,7 +7,16 @@
 .RDataTmp
 
 # User-specific files
+.gitignore
 .Ruserdata
+.Rbuildignore
+.Rproj.user
+.Ruserdata
+.github/*
+surrosurvo.Rproj
+src/*.o
+src/*.so
+src/*.dll
 
 # Example code in package build process
 *-Ex.R
