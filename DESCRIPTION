@@ -13,4 +13,4 @@ Imports: stats, survival, Rcpp (>= 1.0.13), copula
 LinkingTo: Rcpp
 Encoding: UTF-8
 RoxygenNote: 7.3.2
-URL: https://nshi-stat.github.io/surrosurvo/
+URL: https://nshi-stat.github.io/docs/surrosurvo/
