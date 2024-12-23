@@ -10,6 +10,7 @@ An implementation of Kendall's rank correlation coefficient for survival and ord
 - Lakhal L, Rivest L-P, Beaudoin D. IPCW estimator for Kendall's tau under bivariate censoring. *International Journal of Biostatistics* 2009; **5**(1): Article 8. [doi:10.2202/1557-4679.1121](https://doi.org/10.2202/1557-4679.1121).
 - Okui J, Nagashima K, Matsuda S, et al. Surrogacy between pathological complete response and overall survival: An individual patient data analysis of ten RCTs on neoadjuvant treatment plus surgery for esophageal cancer. *In preparation* (2024+).
 
+URL: [https://nshi-stat.github.io/surrosurvo/](https://nshi-stat.github.io/surrosurvo/)
 
 ## Installation
 

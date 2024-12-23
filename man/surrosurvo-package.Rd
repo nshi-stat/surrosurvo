@@ -7,8 +7,15 @@
 \description{
 For simulation.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://nshi-stat.github.io/surrosurvo/}
+}
+
+}
 \author{
-Kengo Nagashima, Jun Okui, , and Yasunori Sato
+Kengo Nagashima and Jun Okui
 }
 \keyword{internal}
 \keyword{package}

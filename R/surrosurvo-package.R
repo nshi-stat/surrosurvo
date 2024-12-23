@@ -1,7 +1,7 @@
 #' Evaluation of Surrogacy for Survival and Ordinal Endpoints
 #'
 #' @author
-#' Kengo Nagashima, Jun Okui, , and Yasunori Sato
+#' Kengo Nagashima and Jun Okui
 #' @name surrosurvo-package
 #' @rdname surrosurvo-package
 #' @aliases surrosurvo-package

@@ -30,6 +30,10 @@
 #' set.seed(1234)
 #' data <- generate_rv(0.7, 500, 0.3)
 #' surrosurvo(data$y, data$event, data$x)
+#'
+#' # 5-level ordinal variable with Clayton copula
+#' data <- generate_rv(0.7, 500, 0.1, copula_type = "Clayton", x_levels = 5)
+#' surrosurvo(data$y, data$event, data$x)
 #' @importFrom copula normalCopula claytonCopula rCopula
 #' @importFrom stats qexp quantile rexp
 #' @export
