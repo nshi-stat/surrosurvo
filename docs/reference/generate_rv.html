@@ -15,7 +15,7 @@ correlated random numbers based on the quantile."><link rel="stylesheet" href="h
 
     <a class="navbar-brand me-2" href="../index.html">surrosurvo</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">2.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,6 +55,7 @@ correlated random numbers based on the quantile.</p>
 <span>  <span class="va">censoring_rate</span>,</span>
 <span>  copula_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gaussian"</span>, <span class="st">"Clayton"</span><span class="op">)</span>,</span>
 <span>  x_levels <span class="op">=</span> <span class="fl">5</span>,</span>
+<span>  x_probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"equal"</span>, <span class="st">"random"</span><span class="op">)</span>,</span>
 <span>  hr <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -85,6 +86,12 @@ correlated random numbers based on the quantile.</p>
 <dd><p>the number of category for the ordinal outcome (default = 5)</p></dd>
 
 
+<dt id="arg-x-probs">x_probs<a class="anchor" aria-label="anchor" href="#arg-x-probs"></a></dt>
+<dd><p>the proportion of each level of x</p><ul><li><p><code>equal</code>: equal sample sizes</p></li>
+<li><p><code>random</code>: random sample sizes</p></li>
+</ul></dd>
+
+
 <dt id="arg-hr">hr<a class="anchor" aria-label="anchor" href="#arg-hr"></a></dt>
 <dd><p>the hazard ratio for survival time (default = 1.0)</p></dd>
 
@@ -107,21 +114,19 @@ correlated random numbers based on the quantile.</p>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">generate_rv</span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">500</span>, <span class="fl">0.3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="surrosurvo.html">surrosurvo</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, <span class="va">data</span><span class="op">$</span><span class="va">event</span>, <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   method       tau         se       lcl       ucl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6556501 0.02496919 0.6067114 0.7045888</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6563674 0.01726476 0.6225291 0.6902057</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5042325 0.01834774 0.4682716 0.5401934</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 tauso1 0.7356190 0.02801531 0.6807100 0.7905280</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 tauso2 0.7350181 0.02611867 0.6838264 0.7862097</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6556501 0.08759590 0.4839653 0.8273349</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6563674 0.01815766 0.6207791 0.6919558</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5042325 0.05508774 0.3962625 0.6122024</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7317075 0.08876159 0.5577379 0.9056770</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># 5-level ordinal variable with Clayton copula</span></span></span>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">generate_rv</span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">500</span>, <span class="fl">0.1</span>, copula_type <span class="op">=</span> <span class="st">"Clayton"</span>, x_levels <span class="op">=</span> <span class="fl">5</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="surrosurvo.html">surrosurvo</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, <span class="va">data</span><span class="op">$</span><span class="va">event</span>, <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   method       tau         se       lcl       ucl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6375091 0.01774413 0.6027312 0.6722869</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6376534 0.01599582 0.6063021 0.6690046</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5999920 0.01633828 0.5679696 0.6320144</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4 tauso1 0.7152653 0.01990908 0.6762443 0.7542864</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 5 tauso2 0.7214756 0.01831078 0.6855871 0.7573641</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6375091 0.06634978 0.5074659 0.7675522</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6376534 0.01635919 0.6055899 0.6697168</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5999920 0.06012728 0.4821447 0.7178393</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7182260 0.07404910 0.5730924 0.8633595</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
@@ -133,7 +138,7 @@ correlated random numbers based on the quantile.</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
     </footer></div>
