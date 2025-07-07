@@ -2,26 +2,42 @@
 % Please edit documentation in R/surrosurvo.R
 \name{surrosurvo}
 \alias{surrosurvo}
-\title{Evaluation of Individual-Level Surrogacy for Survival and Ordinal Endpoints}
+\title{Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
+Continuous, and Survival Endpoints}
 \usage{
-surrosurvo(y, event, x, level = 0.95, confint = TRUE, parallel = FALSE)
+surrosurvo(
+  y,
+  event,
+  x,
+  eventx = NULL,
+  strata = NULL,
+  level = 0.95,
+  B = 25000,
+  parallel = FALSE,
+  seed = NULL
+)
 }
 \arguments{
 \item{y}{the survival time or censoring time outcome vector}
 
 \item{event}{the event indicator outcome vector}
 
-\item{x}{the ordinal (or continuous) outcome vector}
+\item{x}{the ordinal, continuous, or survival outcome vector}
+
+\item{eventx}{the event indicator outcome vector}
+
+\item{strata}{the stratified variable vector}
 
 \item{level}{the confidence level of the confidence interval
 (default = 0.95)}
 
-\item{confint}{whether the calculation of confidence
-intervals is performed (default = TRUE)}
+\item{B}{the number of bootstrap samples}
 
 \item{parallel}{the number of threads used in parallel
 computing, or FALSE that means single threading
 (default = FALSE)}
+
+\item{seed}{set the value of random seed}
 }
 \value{
 \itemize{
@@ -37,11 +53,15 @@ This function can estimate Kendall's \eqn{\tau} as follows:
 Oakes (1982)'s non-parametric estimator \eqn{\hat{\tau}_o},
 Lakhal et al. (2009)'s inverse probability weighting (IPCW)
 estimators \eqn{\hat{\tau}_{mo1}} and \eqn{\hat{\tau}_{mo2}},
-and Okui et al. (2024)'s modified IPCW estimators
-\eqn{\hat{\tau}_{so1}} and \eqn{\hat{\tau}_{so2}}.
-\eqn{\hat{\tau}_{so1}} and \eqn{\hat{\tau}_{so2}} can take
+and Okui et al. (2025)'s modified IPCW estimator
+\eqn{\hat{\tau}_{so}}. \eqn{\hat{\tau}_{so}} can take
 into account tie data. Confidence intervals were based on
 jackknife standard errors with a normal approximation.
+Moreover, theses extensions of stratified estimators,
+\eqn{\hat{\tau}_o^S}, \eqn{\hat{\tau}_{mo1}^S},
+\eqn{\hat{\tau}_{mo1}^S}, \eqn{\hat{\tau}_{so}^S}, are also
+available. Stratified estimators are based on (random-effects)
+meta-analysis models.
 }
 \examples{
 library(surrosurvo)
@@ -65,11 +85,12 @@ IPCW estimator for Kendall's tau under bivariate censoring.
 \strong{5}(1): Article 8.
 \url{https://doi.org/10.2202/1557-4679.1121}
 
-Okui, J., Nagashima, K., Matsuda, S., et al (2024).
-Surrogacy between pathological complete response and overall survival:
-An individual patient data analysis of ten RCTs on neoadjuvant treatment
-plus surgery for esophageal cancer.
-\emph{In preparation}.
+Okui, J., Nagashima, K., Matsuda, S., et al (2025).
+Evaluation of pathological complete response as a surrogate
+endpoint for overall survival in resectable esophageal cancer.
+\emph{Br J Surg.}
+\strong{112}(6)): znaf131.
+\url{https://doi.org/10.1093/bjs/znaf131}
 }
 \seealso{
 \code{\link[=generate_rv]{generate_rv}}.

@@ -1,15 +1,20 @@
 Package: surrosurvo
 Type: Package
 Title: Evaluation of Individual-Level Surrogacy for Survival and Ordinal Endpoints
-Version: 1.0.1
-Date: 2024-12-20
+Version: 2.0.0
+Date: 2025-07-07
 Authors@R: c(
     person("Kengo", "Nagashima", email = "nshi1201@gmail.com",
            role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4529-9045")),
     person("Jun", "Okui", role = c("aut")))
-Description: For simulation.
+Description: An implementation of estimators of Kendall's tau for survival data:
+  Oakes (1982)'s non-parametric estimator <doi:10.1111/j.2517-6161.1982.tb01222.x>,
+  Lakhal et al. (2009)'s inverse probability weighting (IPCW) estimators
+  <doi:10.2202/1557-4679.1121>, Okui et al. (2025)'s modified
+  IPCW estimator <doi:10.1093/bjs/znaf131>, and theses extensions
+  of stratified estimators.
 License: GPL (>= 2)
-Imports: stats, survival, Rcpp (>= 1.0.13), copula
+Imports: stats, survival, Rcpp (>= 1.0.13), copula, pimeta
 LinkingTo: Rcpp
 Encoding: UTF-8
 RoxygenNote: 7.3.2

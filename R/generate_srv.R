@@ -1,0 +1,83 @@
+#' Random number generation for Correlated Survival and Survival Outcomes
+#'
+#' This function generates random number vectors of correlated survival and
+#' survival outcomes. Gaussian or Clayton copula is used to specify the
+#' correlation structure. Marginal distributions are based on a exponential
+#' distribution.
+#'
+#' @param target_tau the target value of the Kendall's \eqn{\tau}
+#' @param num_samples the number of simulation samples
+#' @param censoring_rate the censoring rate for \eqn{y}
+#' @param censoring_ratex the censoring rate for \eqn{x}
+#' @param copula_type copula type (default = "Gaussian")
+#' \itemize{
+#' \item \code{Gaussian}: Gaussian copula
+#' \item \code{Clayton}: Clayton copula
+#' }
+#' @param hr the hazard ratio for survival time \eqn{y} (default = 1.0)
+#' @param hrx the hazard ratio for survival time \eqn{x} (default = 1.0)
+#' @return
+#' \itemize{
+#' \item \code{y}: the survival time or censoring time outcome vector \eqn{y}
+#' \item \code{event}: the event indicator outcome vector \eqn{y}
+#' \item \code{x}: the survival time or censoring time outcome vector \eqn{x}
+#' \item \code{eventx}: the event indicator outcome vector \eqn{x}
+#' \item \code{t}: the true survival time vector \eqn{y} (for simulation)
+#' \item \code{c}: the true censoring time vector \eqn{y} (for simulation)
+#' \item \code{tx}: the true survival time vector \eqn{x} (for simulation)
+#' \item \code{cx}: the true censoring time vector \eqn{x} (for simulation)
+#' }
+#' @examples
+#' library(surrosurvo)
+#' set.seed(1234)
+#' data <- generate_srv(0.7, 500, 0.1, 0.1)
+#' surrosurvo(data$y, data$event, data$x, data$eventx)
+#' @importFrom copula normalCopula claytonCopula rCopula
+#' @importFrom stats qexp quantile rexp
+#' @export
+generate_srv <- function(target_tau, num_samples,
+                         censoring_rate, censoring_ratex,
+                         copula_type = c("Gaussian", "Clayton"),
+                         hr = 1, hrx = 1) {
+
+  # initial check
+  util_check_inrange(target_tau, -1.0, 1.0)
+  util_check_gt(num_samples, 1)
+  util_check_inrange(censoring_rate, 0, 1.0)
+  util_check_inrange(censoring_ratex, 0, 1.0)
+  util_check_gt(hr, 0)
+  util_check_gt(hrx, 0)
+  lstc <- c("Gaussian", "Clayton")
+  copula_type <- match.arg(copula_type)
+  if (!is.element(copula_type, lstc)) {
+    stop("Unknown 'copula_type' specified.")
+  }
+
+  # generate random number vectors
+  if (copula_type == "Gaussian") {
+    cop <- normalCopula(param = sin(target_tau * pi / 2), dim = 2)
+  } else if (copula_type == "Clayton") {
+    cop <- claytonCopula(param = 2 * target_tau / (1 - target_tau), dim = 2)
+  }
+
+  hrc <- (censoring_rate * hr) / (1 - censoring_rate)
+  hrcx <- (censoring_ratex * hrx) / (1 - censoring_ratex)
+
+  u <- rCopula(num_samples, cop)
+
+  # y
+  t <- qexp(u[, 1])/hr
+  c <- rexp(num_samples)/hrc
+  y <- pmin(t, c)
+  event <- ifelse(y == t, 1, 0)
+
+  # x
+  tx <- qexp(u[, 2])/hrx
+  cx <- rexp(num_samples)/hrcx
+  x <- pmin(tx, cx)
+  eventx <- ifelse(x == tx, 1, 0)
+
+  # output
+  data.frame(y, event, x, eventx, t, c, tx, cx)
+
+}

@@ -5,7 +5,7 @@
 \alias{surrosurvo-package}
 \title{Evaluation of Surrogacy for Survival and Ordinal Endpoints}
 \description{
-For simulation.
+An implementation of estimators of Kendall's tau for survival data: Oakes (1982)'s non-parametric estimator \doi{10.1111/j.2517-6161.1982.tb01222.x}, Lakhal et al. (2009)'s inverse probability weighting (IPCW) estimators \doi{10.2202/1557-4679.1121}, Okui et al. (2025)'s modified IPCW estimator \doi{10.1093/bjs/znaf131}, and theses extensions of stratified estimators.
 }
 \seealso{
 Useful links:

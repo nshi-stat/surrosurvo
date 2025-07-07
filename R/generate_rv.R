@@ -15,6 +15,11 @@
 #' \item \code{Clayton}: Clayton copula
 #' }
 #' @param x_levels the number of category for the ordinal outcome (default = 5)
+#' @param x_probs the proportion of each level of x
+#' \itemize{
+#' \item \code{equal}: equal sample sizes
+#' \item \code{random}: random sample sizes
+#' }
 #' @param hr the hazard ratio for survival time (default = 1.0)
 #' @return
 #' \itemize{
@@ -35,11 +40,12 @@
 #' data <- generate_rv(0.7, 500, 0.1, copula_type = "Clayton", x_levels = 5)
 #' surrosurvo(data$y, data$event, data$x)
 #' @importFrom copula normalCopula claytonCopula rCopula
-#' @importFrom stats qexp quantile rexp
+#' @importFrom stats qexp quantile rexp runif
 #' @export
 generate_rv <- function(target_tau, num_samples, censoring_rate,
                         copula_type = c("Gaussian", "Clayton"),
-                        x_levels = 5, hr = 1) {
+                        x_levels = 5, x_probs = c("equal", "random"),
+                        hr = 1) {
 
   # initial check
   util_check_inrange(target_tau, -1.0, 1.0)
@@ -51,6 +57,11 @@ generate_rv <- function(target_tau, num_samples, censoring_rate,
   copula_type <- match.arg(copula_type)
   if (!is.element(copula_type, lstc)) {
     stop("Unknown 'copula_type' specified.")
+  }
+  lstx <- c("equal", "random")
+  x_probs <- match.arg(x_probs)
+  if (!is.element(x_probs, lstx)) {
+    stop("Unknown 'x_probs' specified.")
   }
 
   # generate random number vectors
@@ -69,7 +80,13 @@ generate_rv <- function(target_tau, num_samples, censoring_rate,
   event <- ifelse(y == t, 1, 0)
 
   # discritizing
-  quantiles <- quantile(u[, 2], probs = seq(0, 1, length.out = x_levels + 1))
+  if (x_probs == "equal") {
+    x_probs <- seq(0, 1, length.out = x_levels + 1)
+  } else if (x_probs == "random") {
+    x_probs <- c(0, runif(x_levels - 1), 1)
+    x_probs <- x_probs[order(x_probs)]
+  }
+  quantiles <- quantile(u[, 2], probs = x_probs)
   x <- cut(u[, 2], breaks = quantiles, labels = 0:(x_levels - 1), include.lowest = TRUE)
   x <- as.numeric(x)
   x0 <- u[, 2]

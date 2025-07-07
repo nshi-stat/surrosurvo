@@ -10,6 +10,7 @@ generate_rv(
   censoring_rate,
   copula_type = c("Gaussian", "Clayton"),
   x_levels = 5,
+  x_probs = c("equal", "random"),
   hr = 1
 )
 }
@@ -27,6 +28,12 @@ generate_rv(
 }}
 
 \item{x_levels}{the number of category for the ordinal outcome (default = 5)}
+
+\item{x_probs}{the proportion of each level of x
+\itemize{
+\item \code{equal}: equal sample sizes
+\item \code{random}: random sample sizes
+}}
 
 \item{hr}{the hazard ratio for survival time (default = 1.0)}
 }
