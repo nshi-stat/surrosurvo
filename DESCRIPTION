@@ -1,12 +1,13 @@
 Package: surrosurvo
 Type: Package
-Title: Evaluation of Individual-Level Surrogacy for Survival and Ordinal Endpoints
+Title: Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
+  Continuous, or Survival Endpoints
 Version: 2.0.0
 Date: 2025-07-07
 Authors@R: c(
-    person("Kengo", "Nagashima", email = "nshi1201@gmail.com",
-           role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4529-9045")),
-    person("Jun", "Okui", role = c("aut")))
+  person("Kengo", "Nagashima", email = "nshi1201@gmail.com",
+         role = c("aut", "cre"), comment = c(ORCID = "0000-0003-4529-9045")),
+  person("Jun", "Okui", role = c("aut")))
 Description: An implementation of estimators of Kendall's tau for survival data:
   Oakes (1982)'s non-parametric estimator <doi:10.1111/j.2517-6161.1982.tb01222.x>,
   Lakhal et al. (2009)'s inverse probability weighting (IPCW) estimators

@@ -15,7 +15,6 @@
 #' \item \code{Clayton}: Clayton copula
 #' }
 #' @param hr the hazard ratio for survival time \eqn{y} (default = 1.0)
-#' @param hrx the hazard ratio for survival time \eqn{x} (default = 1.0)
 #' @return
 #' \itemize{
 #' \item \code{y}: the survival time or censoring time outcome vector \eqn{y}
@@ -36,21 +35,28 @@
 #' @importFrom stats qexp quantile rexp
 #' @export
 generate_srv <- function(target_tau, num_samples,
-                         censoring_rate, censoring_ratex,
+                         censoring_rate, censoring_ratex = NULL,
+                         censtype = c("univariate", "independent"),
                          copula_type = c("Gaussian", "Clayton"),
-                         hr = 1, hrx = 1) {
+                         hr = 1) {
 
   # initial check
   util_check_inrange(target_tau, -1.0, 1.0)
   util_check_gt(num_samples, 1)
   util_check_inrange(censoring_rate, 0, 1.0)
-  util_check_inrange(censoring_ratex, 0, 1.0)
   util_check_gt(hr, 0)
-  util_check_gt(hrx, 0)
   lstc <- c("Gaussian", "Clayton")
   copula_type <- match.arg(copula_type)
   if (!is.element(copula_type, lstc)) {
     stop("Unknown 'copula_type' specified.")
+  }
+  lstc <- c("univariate", "independent")
+  censtype <- match.arg(censtype)
+  if (!is.element(censtype, lstc)) {
+    stop("Unknown 'censtype' specified.")
+  }
+  if (!is.null(censoring_ratex) | censtype == "independent") {
+    util_check_inrange(censoring_ratex, 0, 1.0)
   }
 
   # generate random number vectors
@@ -60,20 +66,26 @@ generate_srv <- function(target_tau, num_samples,
     cop <- claytonCopula(param = 2 * target_tau / (1 - target_tau), dim = 2)
   }
 
-  hrc <- (censoring_rate * hr) / (1 - censoring_rate)
-  hrcx <- (censoring_ratex * hrx) / (1 - censoring_ratex)
-
   u <- rCopula(num_samples, cop)
 
   # y
+  hrc <- (censoring_rate * hr)/(1 - censoring_rate)
   t <- qexp(u[, 1])/hr
   c <- rexp(num_samples)/hrc
   y <- pmin(t, c)
   event <- ifelse(y == t, 1, 0)
 
   # x
-  tx <- qexp(u[, 2])/hrx
-  cx <- rexp(num_samples)/hrcx
+  tx <- qexp(u[, 2])/hr
+  rtx <- tx/t
+  tx <- tx/max(rtx)
+  # tx <- pmin(t, tx)
+  if (censtype == "univariate") {
+    cx <- c
+  } else {
+    hrcx <- (censoring_ratex * hr * max(rtx))/(1 - censoring_ratex)
+    cx <- rexp(num_samples)/hrcx
+  }
   x <- pmin(tx, cx)
   eventx <- ifelse(x == tx, 1, 0)
 

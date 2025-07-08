@@ -1,5 +1,5 @@
 #' Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
-#' Continuous, and Survival Endpoints
+#' Continuous, or Survival Endpoints
 #'
 #' This function can estimate Kendall's \eqn{\tau} as follows:
 #' Oakes (1982)'s non-parametric estimator \eqn{\hat{\tau}_o},
@@ -67,9 +67,10 @@
 #' @importFrom survival Surv survfit
 #' @importFrom stats qnorm
 #' @export
-surrosurvo <- function(y, event, x, eventx = NULL, strata = NULL,
-                       level = 0.95, B = 25000, parallel = FALSE,
-                       seed = NULL) {
+surrosurvo <- function(y, event, x, eventx = NULL,
+                       censtype = c("univariate", "independent"),
+                       strata = NULL, level = 0.95, B = 25000,
+                       parallel = FALSE, seed = NULL) {
 
   # initial check
   util_check_ge(y, 0)
@@ -85,15 +86,24 @@ surrosurvo <- function(y, event, x, eventx = NULL, strata = NULL,
     util_check_gt(L, 1)
   }
 
+  lstc <- c("univariate", "independent")
+  censtype <- match.arg(censtype)
+  if (!is.element(censtype, lstc)) {
+    stop("Unknown 'censtype' specified.")
+  }
+
+  # analysis
   if (!is.null(strata)) {
     # stratified
     res <- surrosurvo_strata(y = y, event = event, x = x, eventx = eventx,
-                             strata = strata, level = level,
-                             B = B, parallel = parallel, seed = seed)
+                             strata = strata, censtype = censtype,
+                             level = level, B = B, parallel = parallel,
+                             seed = seed)
   } else {
     # not stratified
     res <- surrosurvo_base(y = y, event = event, x = x, eventx = eventx,
-                           level = level, parallel = parallel)
+                           censtype = censtype, level = level,
+                           parallel = parallel)
   }
 
   return(res)

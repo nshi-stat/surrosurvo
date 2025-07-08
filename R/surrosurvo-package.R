@@ -1,7 +1,7 @@
 #' Evaluation of Surrogacy for Survival and Ordinal Endpoints
 #'
 #' @author
-#' Kengo Nagashima and Jun Okui
+#' Kengo Nagashima, Jun Okui, , and Yasunori Sato
 #' @name surrosurvo-package
 #' @rdname surrosurvo-package
 #' @aliases surrosurvo-package
@@ -9,5 +9,4 @@
 #' @keywords package
 #' @useDynLib surrosurvo, .registration = TRUE
 #' @importFrom Rcpp evalCpp
-#' @keywords internal
-"_PACKAGE"
+#' @keywords inte

@@ -1,8 +1,10 @@
 #' @importFrom survival Surv survfit
 #' @importFrom stats qnorm
 #' @importFrom pimeta cima
-surrosurvo_strata <- function(y, event, x, eventx, strata, level = 0.95,
-                              B = 25000, parallel = FALSE, seed = NULL) {
+surrosurvo_strata <- function(y, event, x, eventx, strata,
+                              censtype = c("univariate", "independent"),
+                              level = 0.95, B = 25000, parallel = FALSE,
+                              seed = NULL) {
 
   out <- NULL
   L <- max(strata)
@@ -18,7 +20,7 @@ surrosurvo_strata <- function(y, event, x, eventx, strata, level = 0.95,
       eventx2 <- eventx[strata == i]
     }
     outs <- surrosurvo_base(y = y2, event = event2, x = x2, eventx = eventx2,
-                            level = level, parallel = parallel)
+                            censtype = censtype, level = level, parallel = parallel)
     out <- rbind(
       out,
       data.frame(strata = i, outs)

@@ -11,34 +11,36 @@ Rcpp::Rostream<false>& Rcpp::Rcerr = Rcpp::Rcpp_cerr_get();
 #endif
 
 // surrosurvoCpp
-DataFrame surrosurvoCpp(const DataFrame df, const int n);
-RcppExport SEXP _surrosurvo_surrosurvoCpp(SEXP dfSEXP, SEXP nSEXP) {
+DataFrame surrosurvoCpp(const DataFrame df, const int n, const int censtypen);
+RcppExport SEXP _surrosurvo_surrosurvoCpp(SEXP dfSEXP, SEXP nSEXP, SEXP censtypenSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const DataFrame >::type df(dfSEXP);
     Rcpp::traits::input_parameter< const int >::type n(nSEXP);
-    rcpp_result_gen = Rcpp::wrap(surrosurvoCpp(df, n));
+    Rcpp::traits::input_parameter< const int >::type censtypen(censtypenSEXP);
+    rcpp_result_gen = Rcpp::wrap(surrosurvoCpp(df, n, censtypen));
     return rcpp_result_gen;
 END_RCPP
 }
 // confintCpp
-DataFrame confintCpp(const DataFrame df, const int n, const int nthread);
-RcppExport SEXP _surrosurvo_confintCpp(SEXP dfSEXP, SEXP nSEXP, SEXP nthreadSEXP) {
+DataFrame confintCpp(const DataFrame df, const int n, const int censtypen, const int nthread);
+RcppExport SEXP _surrosurvo_confintCpp(SEXP dfSEXP, SEXP nSEXP, SEXP censtypenSEXP, SEXP nthreadSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< const DataFrame >::type df(dfSEXP);
     Rcpp::traits::input_parameter< const int >::type n(nSEXP);
+    Rcpp::traits::input_parameter< const int >::type censtypen(censtypenSEXP);
     Rcpp::traits::input_parameter< const int >::type nthread(nthreadSEXP);
-    rcpp_result_gen = Rcpp::wrap(confintCpp(df, n, nthread));
+    rcpp_result_gen = Rcpp::wrap(confintCpp(df, n, censtypen, nthread));
     return rcpp_result_gen;
 END_RCPP
 }
 
 static const R_CallMethodDef CallEntries[] = {
-    {"_surrosurvo_surrosurvoCpp", (DL_FUNC) &_surrosurvo_surrosurvoCpp, 2},
-    {"_surrosurvo_confintCpp", (DL_FUNC) &_surrosurvo_confintCpp, 3},
+    {"_surrosurvo_surrosurvoCpp", (DL_FUNC) &_surrosurvo_surrosurvoCpp, 3},
+    {"_surrosurvo_confintCpp", (DL_FUNC) &_surrosurvo_confintCpp, 4},
     {NULL, NULL, 0}
 };
 

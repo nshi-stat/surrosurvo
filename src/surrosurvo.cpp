@@ -10,7 +10,7 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-DataFrame surrosurvoCpp(const DataFrame df, const int n) {
+DataFrame surrosurvoCpp(const DataFrame df, const int n, const int censtypen) {
 
   double *tauo = new double[1];
   double *taumo1 = new double[1];
@@ -23,7 +23,8 @@ DataFrame surrosurvoCpp(const DataFrame df, const int n) {
   NumericVector d = df[3];
   NumericVector p = df[4];
   NumericVector q = df[5];
-  sso(y, c, x, d, p, q, n, &tauo[0], &taumo1[0], &taumo2[0], &tauso[0]);
+  sso(y, c, x, d, p, q, n, censtypen,
+      &tauo[0], &taumo1[0], &taumo2[0], &tauso[0]);
 
   DataFrame out = DataFrame::create(
     Named("tauo") = array2nvec(tauo, 1),
@@ -42,7 +43,8 @@ DataFrame surrosurvoCpp(const DataFrame df, const int n) {
 }
 
 // [[Rcpp::export]]
-DataFrame confintCpp(const DataFrame df, const int n, const int nthread) {
+DataFrame confintCpp(const DataFrame df, const int n, const int censtypen,
+                     const int nthread) {
 
   int i;
   double *tauo = new double[n];
@@ -66,7 +68,8 @@ DataFrame confintCpp(const DataFrame df, const int n, const int nthread) {
 {
 #pragma omp for nowait
   for (i = 0; i < n; i++) {
-    jsso(y, c, x, d, p, q, n - 1, i, &tauo[i], &taumo1[i], &taumo2[i], &tauso[i]);
+    jsso(y, c, x, d, p, q, n - 1, censtypen, i,
+         &tauo[i], &taumo1[i], &taumo2[i], &tauso[i]);
   }
 }
 
@@ -89,8 +92,8 @@ return out;
 void sso(const NumericVector y, const NumericVector c,
          const NumericVector x, const NumericVector d,
          const NumericVector p, const NumericVector q,
-         const int n, double *tauo, double *taumo1,
-         double *taumo2, double *tauso) {
+         const int n, const int censtypen,
+         double *tauo, double *taumo1, double *taumo2, double *tauso) {
 
   int l, a1, a2, b1, b2;
   double p2;
@@ -113,7 +116,11 @@ void sso(const NumericVector y, const NumericVector c,
       ty += (y[i] == y[j]);
       tx += (x[i] == x[j]);
       tau1 += l*a1*b1;
-      p2 = pow(std::max(p[i], p[j])*std::max(q[i], q[j]), 2);
+      if (censtypen == 1) {
+        p2 = pow(std::min(std::max(p[i], p[j]), std::max(q[i], q[j])), 2);
+      } else {
+        p2 = pow(std::max(p[i], p[j])*std::max(q[i], q[j]), 2);
+      }
       if (p2 > 0) {
         mtau1 += l*a1*b1/p2;
         mtau2 += l*a2*b2/p2;
@@ -132,8 +139,8 @@ void sso(const NumericVector y, const NumericVector c,
 void jsso(const NumericVector y, const NumericVector c,
           const NumericVector x, const NumericVector d,
           const NumericVector p, const NumericVector q,
-          const int n, const int r, double *tauo,
-          double *taumo1, double *taumo2, double *tauso) {
+          const int n, const int censtypen, const int r,
+          double *tauo, double *taumo1, double *taumo2, double *tauso) {
 
   int l, a1, a2, b1, b2;
   double p2;
@@ -157,7 +164,11 @@ void jsso(const NumericVector y, const NumericVector c,
         tx += (y[i] == y[j]);
         ty += (x[i] == x[j]);
         tau1 += l*a1*b1;
-        p2 = pow(std::max(p[i], p[j])*std::max(q[i], q[j]), 2);
+        if (censtypen == 1) {
+          p2 = pow(std::min(std::max(p[i], p[j]), std::max(q[i], q[j])), 2);
+        } else {
+          p2 = pow(std::max(p[i], p[j])*std::max(q[i], q[j]), 2);
+        }
         if (p2 > 0) {
           mtau1 += l*a1*b1/p2;
           mtau2 += l*a2*b2/p2;
