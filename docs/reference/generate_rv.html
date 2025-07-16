@@ -56,6 +56,7 @@ correlated random numbers based on the quantile.</p>
 <span>  copula_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gaussian"</span>, <span class="st">"Clayton"</span><span class="op">)</span>,</span>
 <span>  x_levels <span class="op">=</span> <span class="fl">5</span>,</span>
 <span>  x_probs <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"equal"</span>, <span class="st">"random"</span><span class="op">)</span>,</span>
+<span>  x_values <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  hr <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
@@ -87,13 +88,19 @@ correlated random numbers based on the quantile.</p>
 
 
 <dt id="arg-x-probs">x_probs<a class="anchor" aria-label="anchor" href="#arg-x-probs"></a></dt>
-<dd><p>the proportion of each level of x</p><ul><li><p><code>equal</code>: equal sample sizes</p></li>
+<dd><p>the proportion of each level of x (default = "equal")</p></dd>
+
+
+<dt id="arg-x-values">x_values<a class="anchor" aria-label="anchor" href="#arg-x-values"></a></dt>
+<dd><p>the cutoff values of x. If <code>x_values</code> is specified,
+                <code>x_probs</code> is ignored. <code>x_levels - 1</code> and the
+                lengths of <code>x_levels</code> must be equal.</p><ul><li><p><code>equal</code>: equal sample sizes</p></li>
 <li><p><code>random</code>: random sample sizes</p></li>
 </ul></dd>
 
 
 <dt id="arg-hr">hr<a class="anchor" aria-label="anchor" href="#arg-hr"></a></dt>
-<dd><p>the hazard ratio for survival time (default = 1.0)</p></dd>
+<dd><p>the hazard rate for survival time (default = 1.0)</p></dd>
 
 </dl></div>
     <div class="section level2">

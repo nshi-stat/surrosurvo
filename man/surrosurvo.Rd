@@ -3,13 +3,14 @@
 \name{surrosurvo}
 \alias{surrosurvo}
 \title{Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
-Continuous, and Survival Endpoints}
+Continuous, or Survival Endpoints}
 \usage{
 surrosurvo(
   y,
   event,
   x,
   eventx = NULL,
+  censtype = c("univariate", "independent"),
   strata = NULL,
   level = 0.95,
   B = 25000,

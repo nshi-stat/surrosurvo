@@ -15,12 +15,15 @@
 #' \item \code{Clayton}: Clayton copula
 #' }
 #' @param x_levels the number of category for the ordinal outcome (default = 5)
-#' @param x_probs the proportion of each level of x
+#' @param x_probs the proportion of each level of x (default = "equal")
+#' @param x_values the cutoff values of x. If \code{x_values} is specified,
+#'                 \code{x_probs} is ignored. \code{x_levels - 1} and the
+#'                 lengths of \code{x_levels} must be equal.
 #' \itemize{
 #' \item \code{equal}: equal sample sizes
 #' \item \code{random}: random sample sizes
 #' }
-#' @param hr the hazard ratio for survival time (default = 1.0)
+#' @param hr the hazard rate for survival time (default = 1.0)
 #' @return
 #' \itemize{
 #' \item \code{y}: the survival time or censoring time outcome vector
@@ -45,7 +48,7 @@
 generate_rv <- function(target_tau, num_samples, censoring_rate,
                         copula_type = c("Gaussian", "Clayton"),
                         x_levels = 5, x_probs = c("equal", "random"),
-                        hr = 1) {
+                        x_values = NULL, hr = 1) {
 
   # initial check
   util_check_inrange(target_tau, -1.0, 1.0)
@@ -62,6 +65,9 @@ generate_rv <- function(target_tau, num_samples, censoring_rate,
   x_probs <- match.arg(x_probs)
   if (!is.element(x_probs, lstx)) {
     stop("Unknown 'x_probs' specified.")
+  }
+  if (!is.null(x_values) & (x_levels != length(x_values) + 1)) {
+    stop("'x_levels - 1' and the lengths of 'x_levels' must be equal.")
   }
 
   # generate random number vectors
@@ -80,14 +86,28 @@ generate_rv <- function(target_tau, num_samples, censoring_rate,
   event <- ifelse(y == t, 1, 0)
 
   # discritizing
-  if (x_probs == "equal") {
-    x_probs <- seq(0, 1, length.out = x_levels + 1)
-  } else if (x_probs == "random") {
-    x_probs <- c(0, runif(x_levels - 1), 1)
-    x_probs <- x_probs[order(x_probs)]
+  if (!is.null(x_values)) {
+    x <- u[, 2]
+    for (j in 1:x_levels) {
+      if (j == 1) {
+        x[u[, 2] < x_values[1]] <- j - 1
+      } else if (j == x_levels) {
+        x[u[, 2] >= x_values[j - 1]] <- j - 1
+      } else {
+        x[u[, 2] >= x_values[j - 1] & u[, 2] < x_values[j]] <- j - 1
+      }
+    }
+    x <- factor(x)
+  } else {
+    if (x_probs == "equal") {
+      x_probs <- seq(0, 1, length.out = x_levels + 1)
+    } else if (x_probs == "random") {
+      x_probs <- c(0, runif(x_levels - 1), 1)
+      x_probs <- x_probs[order(x_probs)]
+    }
+    quantiles <- quantile(u[, 2], probs = x_probs)
+    x <- cut(u[, 2], breaks = quantiles, labels = 0:(x_levels - 1), include.lowest = TRUE)
   }
-  quantiles <- quantile(u[, 2], probs = x_probs)
-  x <- cut(u[, 2], breaks = quantiles, labels = 0:(x_levels - 1), include.lowest = TRUE)
   x <- as.numeric(x)
   x0 <- u[, 2]
 

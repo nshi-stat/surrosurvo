@@ -11,6 +11,7 @@ generate_rv(
   copula_type = c("Gaussian", "Clayton"),
   x_levels = 5,
   x_probs = c("equal", "random"),
+  x_values = NULL,
   hr = 1
 )
 }
@@ -29,13 +30,17 @@ generate_rv(
 
 \item{x_levels}{the number of category for the ordinal outcome (default = 5)}
 
-\item{x_probs}{the proportion of each level of x
+\item{x_probs}{the proportion of each level of x (default = "equal")}
+
+\item{x_values}{the cutoff values of x. If \code{x_values} is specified,
+                \code{x_probs} is ignored. \code{x_levels - 1} and the
+                lengths of \code{x_levels} must be equal.
 \itemize{
 \item \code{equal}: equal sample sizes
 \item \code{random}: random sample sizes
 }}
 
-\item{hr}{the hazard ratio for survival time (default = 1.0)}
+\item{hr}{the hazard rate for survival time (default = 1.0)}
 }
 \value{
 \itemize{

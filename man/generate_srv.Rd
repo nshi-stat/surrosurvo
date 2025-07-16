@@ -8,10 +8,10 @@ generate_srv(
   target_tau,
   num_samples,
   censoring_rate,
-  censoring_ratex,
+  censoring_ratex = NULL,
+  censtype = c("univariate", "independent"),
   copula_type = c("Gaussian", "Clayton"),
-  hr = 1,
-  hrx = 1
+  hr = 1
 )
 }
 \arguments{
@@ -30,8 +30,6 @@ generate_srv(
 }}
 
 \item{hr}{the hazard ratio for survival time \eqn{y} (default = 1.0)}
-
-\item{hrx}{the hazard ratio for survival time \eqn{x} (default = 1.0)}
 }
 \value{
 \itemize{

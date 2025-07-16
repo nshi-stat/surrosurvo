@@ -35,7 +35,7 @@ util_check_inrange <- function(var, min, max) {
 
   varname <- deparse(substitute(var))
   util_check_num(var, varname)
-  if (any(var < 0.0 | var > 1.0)) {
+  if (any(var < min | var > max)) {
     stop(paste0("'", varname, "' should be in the range of [", min, ", ", max, "]."))
   }
 
@@ -57,6 +57,26 @@ util_check_ge <- function(var, min) {
   util_check_num(var, varname)
   if (any(var < min)) {
     stop(paste0("'", varname, "' should be greater than or equal to ", min, "."))
+  }
+
+}
+
+util_check_lt <- function(var, max) {
+
+  varname <- deparse(substitute(var))
+  util_check_num(var, varname)
+  if (any(var >= max)) {
+    stop(paste0("'", varname, "' should be less than ", max, "."))
+  }
+
+}
+
+util_check_le <- function(var, max) {
+
+  varname <- deparse(substitute(var))
+  util_check_num(var, varname)
+  if (any(var > max)) {
+    stop(paste0("'", varname, "' should be less than or equal to ", max, "."))
   }
 
 }
