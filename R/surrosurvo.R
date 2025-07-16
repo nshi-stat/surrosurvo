@@ -1,5 +1,5 @@
 #' Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
-#' Continuous, or Survival Endpoints
+#' Continuous, or Survival Endpoints in Data with Ties
 #'
 #' This function can estimate Kendall's \eqn{\tau} as follows:
 #' Oakes (1982)'s non-parametric estimator \eqn{\hat{\tau}_o},

@@ -30,15 +30,15 @@ generate_rv(
 
 \item{x_levels}{the number of category for the ordinal outcome (default = 5)}
 
-\item{x_probs}{the proportion of each level of x (default = "equal")}
-
-\item{x_values}{the cutoff values of x. If \code{x_values} is specified,
-                \code{x_probs} is ignored. \code{x_levels - 1} and the
-                lengths of \code{x_levels} must be equal.
+\item{x_probs}{the proportion of each level of x (default = "equal")
 \itemize{
 \item \code{equal}: equal sample sizes
 \item \code{random}: random sample sizes
 }}
+
+\item{x_values}{the cutoff values of x. If \code{x_values} is specified,
+\code{x_probs} is ignored. \code{x_levels - 1} and the
+lengths of \code{x_levels} must be equal.}
 
 \item{hr}{the hazard rate for survival time (default = 1.0)}
 }

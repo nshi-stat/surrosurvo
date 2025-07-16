@@ -1,4 +1,5 @@
-#' Evaluation of Surrogacy for Survival and Ordinal Endpoints
+#' Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
+#' Continuous, or Survival Endpoints in Data with Ties
 #'
 #' @author
 #' Kengo Nagashima and Jun Okui

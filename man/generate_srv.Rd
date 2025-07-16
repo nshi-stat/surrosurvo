@@ -29,7 +29,7 @@ generate_srv(
 \item \code{Clayton}: Clayton copula
 }}
 
-\item{hr}{the hazard ratio for survival time \eqn{y} (default = 1.0)}
+\item{hr}{the hazard rate for survival time \eqn{y} (default = 1.0)}
 }
 \value{
 \itemize{

@@ -1,7 +1,7 @@
 Package: surrosurvo
 Type: Package
 Title: Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
-  Continuous, or Survival Endpoints
+  Continuous, or Survival Endpoints in Data with Ties
 Version: 2.0.0
 Date: 2025-07-16
 Authors@R: c(

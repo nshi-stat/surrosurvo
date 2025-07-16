@@ -16,13 +16,13 @@
 #' }
 #' @param x_levels the number of category for the ordinal outcome (default = 5)
 #' @param x_probs the proportion of each level of x (default = "equal")
-#' @param x_values the cutoff values of x. If \code{x_values} is specified,
-#'                 \code{x_probs} is ignored. \code{x_levels - 1} and the
-#'                 lengths of \code{x_levels} must be equal.
 #' \itemize{
 #' \item \code{equal}: equal sample sizes
 #' \item \code{random}: random sample sizes
 #' }
+#' @param x_values the cutoff values of x. If \code{x_values} is specified,
+#'                 \code{x_probs} is ignored. \code{x_levels - 1} and the
+#'                 lengths of \code{x_levels} must be equal.
 #' @param hr the hazard rate for survival time (default = 1.0)
 #' @return
 #' \itemize{

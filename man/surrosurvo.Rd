@@ -3,7 +3,7 @@
 \name{surrosurvo}
 \alias{surrosurvo}
 \title{Evaluation of Individual-Level Surrogacy for Survival and Ordinal,
-Continuous, or Survival Endpoints}
+Continuous, or Survival Endpoints in Data with Ties}
 \usage{
 surrosurvo(
   y,

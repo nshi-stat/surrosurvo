@@ -1,0 +1,46 @@
+citHeader("To cite", sQuote("surrosurvo"), "in publications, please use:")
+
+citEntry(
+  entry        = "Article",
+  title        = "Evaluation of pathological complete response as a surrogate endpoint for overall survival in resectable oesophageal cancer: integrated analysis of individual patient data from phase III trials",
+  author       = personList(
+                   as.person("Jun Okui"),
+		               as.person("Kengo Nagashima"),
+		               as.person("Satoru Matsuda"),
+		               as.person("Yasunori Sato"),
+		               as.person("Hirofumi Kawakubo"),
+		               as.person("Thomas Ruhstaller"),
+		               as.person("Peter Thuss-Patience"),
+		               as.person("Magnus Nilsson"),
+		               as.person("Fredrik Klevebro"),
+		               as.person("Lijie Tan"),
+		               as.person("Shaoyuan Zhang"),
+		               as.person("Thomas Aparicio"),
+		               as.person("Guillaume Piessen"),
+		               as.person("Charlène van der Zijden"),
+		               as.person("Bianca Mostert"),
+		               as.person("Bas P L Wijnhoven"),
+		               as.person("Takahiro Tsushima"),
+		               as.person("Hiroya Takeuchi"),
+		               as.person("Ken Kato"),
+		               as.person("Yuko Kitagawa")
+                 ),
+  journal      = "British Journal of Surgery",
+  year         = "2025",
+  volume       = "112",
+  number       = "6",
+  pages        = "znaf131",
+	url          = "https://doi.org/10.1093/bjs/znaf131"
+)
+
+citEntry(
+  entry        = "Manual",
+  title        = "surrosurvo: Evaluation of Individual-Level Surrogacy for Survival and Ordinal, Continuous, or Survival Endpoints in Data with Ties",
+  author       = personList(
+		               as.person("Kengo Nagashima"),
+                   as.person("Jun Okui")
+                 ),
+  year         = "2025",
+  note         = "R package version 2.0.0",
+	url          = "https://nshi-stat.github.io/surrosurvo/"
+)

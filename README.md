@@ -2,10 +2,10 @@
 # surrosurvo package
 
 
-## Evaluation of Individual-Level Surrogacy for Survival and Ordinal Endpoints
+## Evaluation of Individual-Level Surrogacy for Survival and Ordinal, Continuous, or Survival Endpoints in Data with Ties
 
 An implementation of Kendall's rank correlation coefficient for survival and
-ordinal endpoints:
+ordinal, continuous, or survival endpoints in data with ties:
 
 - Oakes D. A model for association in bivariate survival data.
   *Journal of the Royal Statistical Society: Series B (Methodological)* 1982;
@@ -25,6 +25,7 @@ ordinal endpoints:
 
 URL: [https://nshi-stat.github.io/surrosurvo/](https://nshi-stat.github.io/surrosurvo/)
 
+GitHub: [https://github.com/nshi-stat/surrosurvo/](https://github.com/nshi-stat/surrosurvo/)
 
 ## Installation
 

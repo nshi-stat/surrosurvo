@@ -14,7 +14,7 @@
 #' \item \code{Gaussian}: Gaussian copula
 #' \item \code{Clayton}: Clayton copula
 #' }
-#' @param hr the hazard ratio for survival time \eqn{y} (default = 1.0)
+#' @param hr the hazard rate for survival time \eqn{y} (default = 1.0)
 #' @return
 #' \itemize{
 #' \item \code{y}: the survival time or censoring time outcome vector \eqn{y}
