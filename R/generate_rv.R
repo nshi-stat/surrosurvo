@@ -97,7 +97,6 @@ generate_rv <- function(target_tau, num_samples, censoring_rate,
         x[u[, 2] >= x_values[j - 1] & u[, 2] < x_values[j]] <- j - 1
       }
     }
-    x <- factor(x)
   } else {
     if (x_probs == "equal") {
       x_probs <- seq(0, 1, length.out = x_levels + 1)
@@ -107,8 +106,8 @@ generate_rv <- function(target_tau, num_samples, censoring_rate,
     }
     quantiles <- quantile(u[, 2], probs = x_probs)
     x <- cut(u[, 2], breaks = quantiles, labels = 0:(x_levels - 1), include.lowest = TRUE)
+    x <- as.numeric(x) - 1
   }
-  x <- as.numeric(x)
   x0 <- u[, 2]
 
   # output

@@ -68,7 +68,7 @@ DataFrame confintCpp(const DataFrame df, const int n, const int censtypen,
 {
 #pragma omp for nowait
   for (i = 0; i < n; i++) {
-    jsso(y, c, x, d, p, q, n - 1, censtypen, i,
+    jsso(y, c, x, d, p, q, n, censtypen, i,
          &tauo[i], &taumo1[i], &taumo2[i], &tauso[i]);
   }
 }
@@ -150,7 +150,7 @@ void jsso(const NumericVector y, const NumericVector c,
   double mtau1 = 0;
   double mtau2 = 0;
   double denom1 = 0;
-  double n1 = n*(n - 1);
+  double n1 = (n - 1)*(n - 2);
 
   for (int i = 0; i < n; i++) {
     for (int j = i + 1; j < n; j++) {

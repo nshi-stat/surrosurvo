@@ -16,10 +16,9 @@ surrosurvo_base <- function(y, event, x, eventx = NULL,
     df <- data.frame(id = 1:n, time, ctime, censor, x, ctimex, censorx)
     fit1 <- survfit(Surv(time, censor) ~ 1, df)
     fit2 <- survfit(Surv(x, censorx) ~ 1, df)
-    sc1 <- data.frame(time = fit1$time, surv = fit1$surv)
-    sc2 <- data.frame(x = fit2$time, survx = fit2$surv)
-    df <- merge(df, sc1, by = "time")
-    df <- merge(df, sc2, by = "x")
+    survest1 <- stepfun(fit1$time, c(1, fit1$surv))
+    survest2 <- stepfun(fit2$time, c(1, fit2$surv))
+    df <- data.frame(df, surv = survest1(df$time), survx = survest2(df$x))
     df <- df[order(df$id),]
   } else if (!is.null(eventx) & censtype == "univariate") {
     censtypen <- 1
@@ -29,12 +28,13 @@ surrosurvo_base <- function(y, event, x, eventx = NULL,
     fit <- survfit(Surv(timeu, censoru) ~ 1, df)
     survest <- stepfun(fit$time, c(1, fit$surv))
     df <- data.frame(df, surv = survest(df$time), survx = survest(df$x))
+    df <- df[order(df$id),]
   } else {
     censtypen <- 0
     df <- data.frame(id = 1:n, time, ctime, censor, x, ctimex = Inf, survx = 1)
     fit <- survfit(Surv(time, censor) ~ 1, df)
-    sc <- data.frame(time = fit$time, surv = fit$surv)
-    df <- merge(df, sc, by = "time")
+    survest <- stepfun(fit$time, c(1, fit$surv))
+    df <- data.frame(df, surv = survest(df$time))
     df <- df[order(df$id),]
   }
   df <- df[,c("time", "ctime", "x", "ctimex", "surv", "survx")]
