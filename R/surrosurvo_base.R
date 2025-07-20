@@ -1,5 +1,5 @@
 #' @importFrom survival Surv survfit
-#' @importFrom stats qnorm
+#' @importFrom stats qnorm stepfun
 surrosurvo_base <- function(y, event, x, eventx = NULL,
                             censtype = c("univariate", "independent"),
                             level = 0.95, parallel = FALSE) {

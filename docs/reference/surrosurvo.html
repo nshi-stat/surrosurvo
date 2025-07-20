@@ -107,6 +107,15 @@ meta-analysis models.</p>
 <dd><p>the event indicator outcome vector</p></dd>
 
 
+<dt id="arg-censtype">censtype<a class="anchor" aria-label="anchor" href="#arg-censtype"></a></dt>
+<dd><p>the type of censoring model for survival and survival
+  outcomes (default = "univariate"; see Lakhal et al. (2009)).</p><ul><li><p><code>univariate</code>: univariate censoring model:
+  \(Y = \min(T, C)\), \(X = \min(T_X, C)\)</p></li>
+<li><p><code>independent</code>: independent censoring model:
+  \(Y = \min(T, C)\), \(X = \min(T_X, C_X)\)</p></li>
+</ul></dd>
+
+
 <dt id="arg-strata">strata<a class="anchor" aria-label="anchor" href="#arg-strata"></a></dt>
 <dd><p>the stratified variable vector</p></dd>
 
@@ -170,18 +179,18 @@ endpoint for overall survival in resectable esophageal cancer.
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu"><a href="generate_rv.html">generate_rv</a></span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">300</span>, <span class="fl">0.3</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">surrosurvo</span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, <span class="va">data</span><span class="op">$</span><span class="va">event</span>, <span class="va">data</span><span class="op">$</span><span class="va">x</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   method       tau         se       lcl       ucl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6705591 0.02970130 0.6123456 0.7287725</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6719080 0.01946449 0.6337583 0.7100577</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5268004 0.02292427 0.4818697 0.5717312</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7563231 0.03248897 0.6926459 0.8200004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6705591 0.02860693 0.6144905 0.7266276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6719080 0.01936183 0.6339595 0.7098565</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5268004 0.02155815 0.4845472 0.5690537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7563231 0.03076103 0.6960326 0.8166137</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="co"># Parallel computation</span></span></span>
 <span class="r-in"><span><span class="fu">surrosurvo</span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, <span class="va">data</span><span class="op">$</span><span class="va">event</span>, <span class="va">data</span><span class="op">$</span><span class="va">x</span>, parallel <span class="op">=</span> <span class="fl">2</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   method       tau         se       lcl       ucl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6705591 0.02970130 0.6123456 0.7287725</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6719080 0.01946449 0.6337583 0.7100577</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5268004 0.02292427 0.4818697 0.5717312</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7563231 0.03248897 0.6926459 0.8200004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.6705591 0.02860693 0.6144905 0.7266276</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.6719080 0.01936183 0.6339595 0.7098565</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.5268004 0.02155815 0.4845472 0.5690537</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7563231 0.03076103 0.6960326 0.8166137</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

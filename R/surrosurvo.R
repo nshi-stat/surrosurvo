@@ -19,6 +19,14 @@
 #' @param event the event indicator outcome vector
 #' @param x the ordinal, continuous, or survival outcome vector
 #' @param eventx the event indicator outcome vector
+#' @param censtype the type of censoring model for survival and survival
+#'   outcomes (default = "univariate"; see Lakhal et al. (2009)).
+#' \itemize{
+#' \item \code{univariate}: univariate censoring model:
+#'   \eqn{Y = \min(T, C)}, \eqn{X = \min(T_X, C)}
+#' \item \code{independent}: independent censoring model:
+#'   \eqn{Y = \min(T, C)}, \eqn{X = \min(T_X, C_X)}
+#' }
 #' @param strata the stratified variable vector
 #' @param level the confidence level of the confidence interval
 #' (default = 0.95)
@@ -64,8 +72,6 @@
 #'
 #' # Parallel computation
 #' \donttest{surrosurvo(data$y, data$event, data$x, parallel = 2)}
-#' @importFrom survival Surv survfit
-#' @importFrom stats qnorm
 #' @export
 surrosurvo <- function(y, event, x, eventx = NULL,
                        censtype = c("univariate", "independent"),

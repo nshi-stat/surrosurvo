@@ -1,5 +1,3 @@
-#' @importFrom survival Surv survfit
-#' @importFrom stats qnorm
 #' @importFrom pimeta cima
 surrosurvo_strata <- function(y, event, x, eventx, strata,
                               censtype = c("univariate", "independent"),

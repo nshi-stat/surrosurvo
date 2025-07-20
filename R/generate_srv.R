@@ -7,24 +7,32 @@
 #'
 #' @param target_tau the target value of the Kendall's \eqn{\tau}
 #' @param num_samples the number of simulation samples
-#' @param censoring_rate the censoring rate for \eqn{y}
-#' @param censoring_ratex the censoring rate for \eqn{x}
+#' @param censoring_rate the censoring rate for \code{y}
+#' @param censoring_ratex the censoring rate for \code{x}
+#' @param censtype the type of censoring model for survival and survival
+#'   outcomes (default = "univariate"; see Lakhal et al. (2009)).
+#' \itemize{
+#' \item \code{univariate}: univariate censoring model:
+#'   \eqn{Y = \min(T, C)}, \eqn{X = \min(T_X, C)}
+#' \item \code{independent}: independent censoring model:
+#'   \eqn{Y = \min(T, C)}, \eqn{X = \min(T_X, C_X)}
+#' }
 #' @param copula_type copula type (default = "Gaussian")
 #' \itemize{
 #' \item \code{Gaussian}: Gaussian copula
 #' \item \code{Clayton}: Clayton copula
 #' }
-#' @param hr the hazard rate for survival time \eqn{y} (default = 1.0)
+#' @param hr the hazard rate for survival time \code{y} (default = 1.0)
 #' @return
 #' \itemize{
-#' \item \code{y}: the survival time or censoring time outcome vector \eqn{y}
-#' \item \code{event}: the event indicator outcome vector \eqn{y}
-#' \item \code{x}: the survival time or censoring time outcome vector \eqn{x}
-#' \item \code{eventx}: the event indicator outcome vector \eqn{x}
-#' \item \code{t}: the true survival time vector \eqn{y} (for simulation)
-#' \item \code{c}: the true censoring time vector \eqn{y} (for simulation)
-#' \item \code{tx}: the true survival time vector \eqn{x} (for simulation)
-#' \item \code{cx}: the true censoring time vector \eqn{x} (for simulation)
+#' \item \code{y}: the survival time or censoring time outcome vector \code{y}
+#' \item \code{event}: the event indicator outcome vector \code{y}
+#' \item \code{x}: the survival time or censoring time outcome vector \code{x}
+#' \item \code{eventx}: the event indicator outcome vector \code{x}
+#' \item \code{t}: the true survival time vector \code{y} (for simulation)
+#' \item \code{c}: the true censoring time vector \code{y} (for simulation)
+#' \item \code{tx}: the true survival time vector \code{x} (for simulation)
+#' \item \code{cx}: the true censoring time vector \code{x} (for simulation)
 #' }
 #' @examples
 #' library(surrosurvo)

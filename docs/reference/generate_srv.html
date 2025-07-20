@@ -70,11 +70,20 @@ distribution.</p>
 
 
 <dt id="arg-censoring-rate">censoring_rate<a class="anchor" aria-label="anchor" href="#arg-censoring-rate"></a></dt>
-<dd><p>the censoring rate for \(y\)</p></dd>
+<dd><p>the censoring rate for <code>y</code></p></dd>
 
 
 <dt id="arg-censoring-ratex">censoring_ratex<a class="anchor" aria-label="anchor" href="#arg-censoring-ratex"></a></dt>
-<dd><p>the censoring rate for \(x\)</p></dd>
+<dd><p>the censoring rate for <code>x</code></p></dd>
+
+
+<dt id="arg-censtype">censtype<a class="anchor" aria-label="anchor" href="#arg-censtype"></a></dt>
+<dd><p>the type of censoring model for survival and survival
+  outcomes (default = "univariate"; see Lakhal et al. (2009)).</p><ul><li><p><code>univariate</code>: univariate censoring model:
+  \(Y = \min(T, C)\), \(X = \min(T_X, C)\)</p></li>
+<li><p><code>independent</code>: independent censoring model:
+  \(Y = \min(T, C)\), \(X = \min(T_X, C_X)\)</p></li>
+</ul></dd>
 
 
 <dt id="arg-copula-type">copula_type<a class="anchor" aria-label="anchor" href="#arg-copula-type"></a></dt>
@@ -84,20 +93,20 @@ distribution.</p>
 
 
 <dt id="arg-hr">hr<a class="anchor" aria-label="anchor" href="#arg-hr"></a></dt>
-<dd><p>the hazard rate for survival time \(y\) (default = 1.0)</p></dd>
+<dd><p>the hazard rate for survival time <code>y</code> (default = 1.0)</p></dd>
 
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
 
-<ul><li><p><code>y</code>: the survival time or censoring time outcome vector \(y\)</p></li>
-<li><p><code>event</code>: the event indicator outcome vector \(y\)</p></li>
-<li><p><code>x</code>: the survival time or censoring time outcome vector \(x\)</p></li>
-<li><p><code>eventx</code>: the event indicator outcome vector \(x\)</p></li>
-<li><p><code>t</code>: the true survival time vector \(y\) (for simulation)</p></li>
-<li><p><code>c</code>: the true censoring time vector \(y\) (for simulation)</p></li>
-<li><p><code>tx</code>: the true survival time vector \(x\) (for simulation)</p></li>
-<li><p><code>cx</code>: the true censoring time vector \(x\) (for simulation)</p></li>
+<ul><li><p><code>y</code>: the survival time or censoring time outcome vector <code>y</code></p></li>
+<li><p><code>event</code>: the event indicator outcome vector <code>y</code></p></li>
+<li><p><code>x</code>: the survival time or censoring time outcome vector <code>x</code></p></li>
+<li><p><code>eventx</code>: the event indicator outcome vector <code>x</code></p></li>
+<li><p><code>t</code>: the true survival time vector <code>y</code> (for simulation)</p></li>
+<li><p><code>c</code>: the true censoring time vector <code>y</code> (for simulation)</p></li>
+<li><p><code>tx</code>: the true survival time vector <code>x</code> (for simulation)</p></li>
+<li><p><code>cx</code>: the true censoring time vector <code>x</code> (for simulation)</p></li>
 </ul></div>
 
     <div class="section level2">
@@ -107,10 +116,10 @@ distribution.</p>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">generate_srv</span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">500</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="surrosurvo.html">surrosurvo</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, <span class="va">data</span><span class="op">$</span><span class="va">event</span>, <span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">eventx</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   method       tau         se       lcl       ucl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.7166317 0.06075021 0.5975635 0.8356999</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.7167923 0.01694930 0.6835723 0.7500123</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.6740762 0.05510226 0.5660777 0.7820746</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7166317 0.06075021 0.5975635 0.8356999</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.7166317 0.01611165 0.6850535 0.7482100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.7167923 0.01396510 0.6894212 0.7441634</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.6740762 0.01488392 0.6449042 0.7032481</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7166317 0.01611165 0.6850535 0.7482100</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

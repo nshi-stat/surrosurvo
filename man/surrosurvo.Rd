@@ -27,6 +27,15 @@ surrosurvo(
 
 \item{eventx}{the event indicator outcome vector}
 
+\item{censtype}{the type of censoring model for survival and survival
+  outcomes (default = "univariate"; see Lakhal et al. (2009)).
+\itemize{
+\item \code{univariate}: univariate censoring model:
+  \eqn{Y = \min(T, C)}, \eqn{X = \min(T_X, C)}
+\item \code{independent}: independent censoring model:
+  \eqn{Y = \min(T, C)}, \eqn{X = \min(T_X, C_X)}
+}}
+
 \item{strata}{the stratified variable vector}
 
 \item{level}{the confidence level of the confidence interval

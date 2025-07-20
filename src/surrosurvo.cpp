@@ -12,88 +12,12 @@ using namespace Rcpp;
 // [[Rcpp::export]]
 DataFrame surrosurvoCpp(const DataFrame df, const int n, const int censtypen) {
 
-  double *tauo = new double[1];
-  double *taumo1 = new double[1];
-  double *taumo2 = new double[1];
-  double *tauso = new double[1];
-
-  NumericVector y = df[0];
-  NumericVector c = df[1];
-  NumericVector x = df[2];
-  NumericVector d = df[3];
-  NumericVector p = df[4];
-  NumericVector q = df[5];
-  sso(y, c, x, d, p, q, n, censtypen,
-      &tauo[0], &taumo1[0], &taumo2[0], &tauso[0]);
-
-  DataFrame out = DataFrame::create(
-    Named("tauo") = array2nvec(tauo, 1),
-    Named("taumo1") = array2nvec(taumo1, 1),
-    Named("taumo2") = array2nvec(taumo2, 1),
-    Named("tauso") = array2nvec(tauso, 1)
-  );
-
-  delete [] tauo;
-  delete [] taumo1;
-  delete [] taumo2;
-  delete [] tauso;
-
-  return out;
-
-}
-
-// [[Rcpp::export]]
-DataFrame confintCpp(const DataFrame df, const int n, const int censtypen,
-                     const int nthread) {
-
-  int i;
-  double *tauo = new double[n];
-  double *taumo1 = new double[n];
-  double *taumo2 = new double[n];
-  double *tauso = new double[n];
-  NumericVector y = df[0];
-  NumericVector c = df[1];
-  NumericVector x = df[2];
-  NumericVector d = df[3];
-  NumericVector p = df[4];
-  NumericVector q = df[5];
-
-#ifdef _OPENMP
-  // Rprintf("nthread %d\n", nthread);
-  // Rprintf("maxthread %d\n", omp_get_max_threads());
-  // omp_set_num_threads(std::min(nthread, omp_get_max_threads()));
-  omp_set_num_threads(nthread);
-#endif
-#pragma omp parallel default(shared), private(i)
-{
-#pragma omp for nowait
-  for (i = 0; i < n; i++) {
-    jsso(y, c, x, d, p, q, n, censtypen, i,
-         &tauo[i], &taumo1[i], &taumo2[i], &tauso[i]);
-  }
-}
-
-DataFrame out = DataFrame::create(
-  Named("jktauo") = array2nvec(tauo, n),
-  Named("jktaumo1") = array2nvec(taumo1, n),
-  Named("jktaumo2") = array2nvec(taumo2, n),
-  Named("jktauso") = array2nvec(tauso, n)
-);
-
-delete [] tauo;
-delete [] taumo1;
-delete [] taumo2;
-delete [] tauso;
-
-return out;
-
-}
-
-void sso(const NumericVector y, const NumericVector c,
-         const NumericVector x, const NumericVector d,
-         const NumericVector p, const NumericVector q,
-         const int n, const int censtypen,
-         double *tauo, double *taumo1, double *taumo2, double *tauso) {
+  const NumericVector y = df[0];
+  const NumericVector c = df[1];
+  const NumericVector x = df[2];
+  const NumericVector d = df[3];
+  const NumericVector p = df[4];
+  const NumericVector q = df[5];
 
   int l, a1, a2, b1, b2;
   double p2;
@@ -129,18 +53,59 @@ void sso(const NumericVector y, const NumericVector c,
     }
   }
 
-  *tauo = 2*tau1/n1;
-  *taumo1 = 2*mtau1/n1;
-  *taumo2 = mtau1/denom1;
-  *tauso = mtau2/sqrt(n1*0.5 - tx)/sqrt(n1*0.5 - ty);
+  DataFrame out = DataFrame::create(
+    Named("tauo") = 2*tau1/n1,
+    Named("taumo1") = 2*mtau1/n1,
+    Named("taumo2") = mtau1/denom1,
+    Named("tauso") = mtau2/sqrt(n1*0.5 - tx)/sqrt(n1*0.5 - ty)
+  );
+
+  return out;
 
 }
 
-void jsso(const NumericVector y, const NumericVector c,
-          const NumericVector x, const NumericVector d,
-          const NumericVector p, const NumericVector q,
-          const int n, const int censtypen, const int r,
-          double *tauo, double *taumo1, double *taumo2, double *tauso) {
+// [[Rcpp::export]]
+DataFrame confintCpp(const DataFrame df, const int n, const int censtypen,
+                     const int nthread) {
+
+  int i;
+  NumericMatrix tau(n, 4);
+  const NumericVector y = df[0];
+  const NumericVector c = df[1];
+  const NumericVector x = df[2];
+  const NumericVector d = df[3];
+  const NumericVector p = df[4];
+  const NumericVector q = df[5];
+
+#ifdef _OPENMP
+  // Rprintf("nthread %d\n", nthread);
+  // Rprintf("maxthread %d\n", omp_get_max_threads());
+  // omp_set_num_threads(std::min(nthread, omp_get_max_threads()));
+  omp_set_num_threads(nthread);
+#endif
+#pragma omp parallel default(shared), private(i)
+{
+#pragma omp for nowait
+  for (i = 0; i < n; i++) {
+    tau(i, _) = jsso(y, c, x, d, p, q, n, censtypen, i);
+  }
+}
+
+DataFrame out = DataFrame::create(
+  Named("jktauo") = tau(_, 0),
+  Named("jktaumo1") = tau(_, 1),
+  Named("jktaumo2") = tau(_, 2),
+  Named("jktauso") = tau(_, 3)
+);
+
+return out;
+
+}
+
+NumericVector jsso(const NumericVector y, const NumericVector c,
+                   const NumericVector x, const NumericVector d,
+                   const NumericVector p, const NumericVector q,
+                   const int n, const int censtypen, const int r) {
 
   int l, a1, a2, b1, b2;
   double p2;
@@ -151,6 +116,7 @@ void jsso(const NumericVector y, const NumericVector c,
   double mtau2 = 0;
   double denom1 = 0;
   double n1 = (n - 1)*(n - 2);
+  NumericVector out(4);
 
   for (int i = 0; i < n; i++) {
     for (int j = i + 1; j < n; j++) {
@@ -178,19 +144,11 @@ void jsso(const NumericVector y, const NumericVector c,
     }
   }
 
-  *tauo = 2*tau1/n1;
-  *taumo1 = 2*mtau1/n1;
-  *taumo2 = mtau1/denom1;
-  *tauso = mtau2/sqrt(n1*0.5 - tx)/sqrt(n1*0.5 - ty);
+  out(0) = 2*tau1/n1;
+  out(1) = 2*mtau1/n1;
+  out(2) = mtau1/denom1;
+  out(3) = mtau2/sqrt(n1*0.5 - tx)/sqrt(n1*0.5 - ty);
 
-}
-
-NumericVector array2nvec(const double *ary, const int n) {
-
-  NumericVector nvec(n);
-  for (int i = 0; i < n; i++) {
-    nvec[i] = ary[i];
-  }
-  return nvec;
+  return out;
 
 }
