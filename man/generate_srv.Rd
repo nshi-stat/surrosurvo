@@ -11,7 +11,8 @@ generate_srv(
   censoring_ratex = NULL,
   censtype = c("univariate", "independent"),
   copula_type = c("Gaussian", "Clayton"),
-  hr = 1
+  hr = 1,
+  hrx = 1
 )
 }
 \arguments{
@@ -39,6 +40,8 @@ generate_srv(
 }}
 
 \item{hr}{the hazard rate for survival time \code{y} (default = 1.0)}
+
+\item{hrx}{the hazard rate for survival time \code{x} (default = 1.0)}
 }
 \value{
 \itemize{

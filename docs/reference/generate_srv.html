@@ -53,7 +53,8 @@ distribution.</p>
 <span>  censoring_ratex <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  censtype <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"univariate"</span>, <span class="st">"independent"</span><span class="op">)</span>,</span>
 <span>  copula_type <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Gaussian"</span>, <span class="st">"Clayton"</span><span class="op">)</span>,</span>
-<span>  hr <span class="op">=</span> <span class="fl">1</span></span>
+<span>  hr <span class="op">=</span> <span class="fl">1</span>,</span>
+<span>  hrx <span class="op">=</span> <span class="fl">1</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -95,6 +96,10 @@ distribution.</p>
 <dt id="arg-hr">hr<a class="anchor" aria-label="anchor" href="#arg-hr"></a></dt>
 <dd><p>the hazard rate for survival time <code>y</code> (default = 1.0)</p></dd>
 
+
+<dt id="arg-hrx">hrx<a class="anchor" aria-label="anchor" href="#arg-hrx"></a></dt>
+<dd><p>the hazard rate for survival time <code>x</code> (default = 1.0)</p></dd>
+
 </dl></div>
     <div class="section level2">
     <h2 id="value">Value<a class="anchor" aria-label="anchor" href="#value"></a></h2>
@@ -116,10 +121,10 @@ distribution.</p>
 <span class="r-in"><span><span class="va">data</span> <span class="op">&lt;-</span> <span class="fu">generate_srv</span><span class="op">(</span><span class="fl">0.7</span>, <span class="fl">500</span>, <span class="fl">0.1</span>, <span class="fl">0.1</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="surrosurvo.html">surrosurvo</a></span><span class="op">(</span><span class="va">data</span><span class="op">$</span><span class="va">y</span>, <span class="va">data</span><span class="op">$</span><span class="va">event</span>, <span class="va">data</span><span class="op">$</span><span class="va">x</span>, <span class="va">data</span><span class="op">$</span><span class="va">eventx</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   method       tau         se       lcl       ucl</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.7166317 0.01611165 0.6850535 0.7482100</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.7167923 0.01396510 0.6894212 0.7441634</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.6740762 0.01488392 0.6449042 0.7032481</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7166317 0.01611165 0.6850535 0.7482100</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 1 taumo1 0.7148613 0.01714432 0.6812591 0.7484636</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 2 taumo2 0.7145928 0.01415442 0.6868507 0.7423350</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 3   tauo 0.6606413 0.01579222 0.6296891 0.6915935</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> 4  tauso 0.7148613 0.01714432 0.6812591 0.7484636</span>
 </code></pre></div>
     </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

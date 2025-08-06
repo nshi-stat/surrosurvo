@@ -23,6 +23,7 @@
 #' \item \code{Clayton}: Clayton copula
 #' }
 #' @param hr the hazard rate for survival time \code{y} (default = 1.0)
+#' @param hrx the hazard rate for survival time \code{x} (default = 1.0)
 #' @return
 #' \itemize{
 #' \item \code{y}: the survival time or censoring time outcome vector \code{y}
@@ -46,7 +47,7 @@ generate_srv <- function(target_tau, num_samples,
                          censoring_rate, censoring_ratex = NULL,
                          censtype = c("univariate", "independent"),
                          copula_type = c("Gaussian", "Clayton"),
-                         hr = 1) {
+                         hr = 1, hrx = 1) {
 
   # initial check
   util_check_inrange(target_tau, -1.0, 1.0)
@@ -84,14 +85,12 @@ generate_srv <- function(target_tau, num_samples,
   event <- ifelse(y == t, 1, 0)
 
   # x
-  tx <- qexp(u[, 2])/hr
-  rtx <- tx/t
-  tx <- tx/max(rtx)
+  tx <- qexp(u[, 2])/hrx
   # tx <- pmin(t, tx)
   if (censtype == "univariate") {
     cx <- c
   } else {
-    hrcx <- (censoring_ratex * hr * max(rtx))/(1 - censoring_ratex)
+    hrcx <- (censoring_ratex * hrx)/(1 - censoring_ratex)
     cx <- rexp(num_samples)/hrcx
   }
   x <- pmin(tx, cx)
